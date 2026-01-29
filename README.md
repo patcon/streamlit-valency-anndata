@@ -6,7 +6,7 @@ https://colab.research.google.com/drive/1h-bp6FsiCFHH0qH8s34jOSZY5-BuGPkH#scroll
 
 The intent is to generate an h5ad export file that can be loaded into a polislike web app.
 
-Demo of loading: https://s2hlf3.csb.app/
+Demo of loading: https://y6p9xj.csb.app/
 
 ```
 uv venv
