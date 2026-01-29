@@ -166,4 +166,25 @@ if st.button("Run pipeline and export", type="primary"):
             mime="application/octet-stream",
         )
 
+    st.markdown(
+        """
+After downloading, you can **[visit the app](https://y6p9xj.csb.app/)** to visualize the export.
+"""
+    )
+
+    st.markdown(
+        """
+For an alternative, **advanced** workflow, the export can also be generated directly via a Python notebook  
+(**[Advanced](https://colab.research.google.com/drive/1h-bp6FsiCFHH0qH8s34jOSZY5-BuGPkH)**).
+"""
+    )
+
     os.remove(export_path)
+
+st.markdown(
+    """
+<hr style="margin-top: 3rem; margin-bottom: 1rem;" />
+<sub><a href="https://github.com/patcon/streamlit-valency-anndata">Code</a></sub>
+""",
+    unsafe_allow_html=True,
+)
