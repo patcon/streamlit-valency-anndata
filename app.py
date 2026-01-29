@@ -155,7 +155,7 @@ if st.button("Run pipeline and export", type="primary"):
         delete=False,
     ) as f:
         export_path = f.name
-        adata_export.write_h5ad(export_path)
+        adata_export.write_h5ad(export_path, compression="gzip")
 
     with open(export_path, "rb") as f:
         st.success("Done!")
