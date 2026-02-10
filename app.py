@@ -15,10 +15,17 @@ st.title("🗳️ Polis → AnnData (.h5ad)")
 st.caption("Run Polis-style processing and download a clean h5ad file")
 
 default_url = st.query_params.get("report", "https://pol.is/report/r29kkytnipymd3exbynkd")
+default_lang = st.query_params.get("lang", "")
 
 polis_url = st.text_input(
     "Polis report URL",
     value=default_url,
+)
+
+translate_to = st.text_input(
+    "Translate to language (2-letter code, e.g. en)",
+    value=default_lang,
+    max_chars=2,
 )
 
 st.subheader("Projections")
@@ -41,9 +48,12 @@ if st.button("Run pipeline and export", type="primary"):
         st.stop()
 
     with st.spinner("Loading Polis data…"):
+        load_kwargs = dict()
+        if translate_to.strip():
+            load_kwargs["translate_to"] = translate_to.strip()
         adata = val.datasets.polis.load(
             polis_url,
-            translate_to="en",
+            **load_kwargs,
         )
 
     with st.spinner("Running Polis PCA + kmeans…"):
