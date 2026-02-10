@@ -37,7 +37,7 @@ st.subheader("Metrics")
 
 run_qc = st.checkbox(
     "Calculate QC metrics (calculate_qc_metrics)",
-    value=False,
+    value=True,
 )
 
 st.divider()
