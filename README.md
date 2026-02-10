@@ -15,3 +15,12 @@ uv run streamlit run app.py
 ```
 
 Visit http://localhost:8501
+
+## Query Parameters
+
+You can pre-populate the form via URL query parameters:
+
+- **`report`** -- Polis report URL (e.g. `?report=https://pol.is/report/r32beaksmhwesyum6kaur`)
+- **`lang`** -- Two-letter language code for translation (e.g. `?lang=en`)
+
+Example: `http://localhost:8501/?report=https://pol.is/report/r32beaksmhwesyum6kaur&lang=en`
