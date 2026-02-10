@@ -14,9 +14,11 @@ st.set_page_config(page_title="Polis → h5ad exporter", layout="centered")
 st.title("🗳️ Polis → AnnData (.h5ad)")
 st.caption("Run Polis-style processing and download a clean h5ad file")
 
+default_url = st.query_params.get("report", "https://pol.is/report/r29kkytnipymd3exbynkd")
+
 polis_url = st.text_input(
     "Polis report URL",
-    value="https://pol.is/report/r29kkytnipymd3exbynkd",
+    value=default_url,
 )
 
 st.subheader("Projections")
