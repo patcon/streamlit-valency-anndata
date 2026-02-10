@@ -23,9 +23,8 @@ polis_url = st.text_input(
 )
 
 translate_to = st.text_input(
-    "Translate to language (2-letter code, e.g. en)",
+    "Translate to language (e.g. en, zh-tw)",
     value=default_lang,
-    max_chars=2,
 )
 
 st.subheader("Projections")
@@ -132,7 +131,7 @@ st.markdown(
 <hr style="margin-top: 3rem; margin-bottom: 1rem;" />
 <sub><a href="https://github.com/patcon/streamlit-valency-anndata">Code</a></sub>
 <br/>
-<sub>Tip: You can pre-fill the form via query string, e.g. <code>?report=URL&amp;lang=en</code></sub>
+<sub>Tip: You can pre-fill the form via query string, e.g. <code>?report=URL&amp;lang=zh-tw</code></sub>
 """,
     unsafe_allow_html=True,
 )
