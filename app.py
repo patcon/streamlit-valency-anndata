@@ -131,6 +131,8 @@ st.markdown(
     """
 <hr style="margin-top: 3rem; margin-bottom: 1rem;" />
 <sub><a href="https://github.com/patcon/streamlit-valency-anndata">Code</a></sub>
+<br/>
+<sub>Tip: You can pre-fill the form via query string, e.g. <code>?report=URL&amp;lang=en</code></sub>
 """,
     unsafe_allow_html=True,
 )
