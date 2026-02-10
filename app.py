@@ -3,71 +3,6 @@ import tempfile
 import os
 
 import valency_anndata as val
-from anndata import AnnData
-
-
-# ----------------------------
-# Utilities
-# ----------------------------
-
-def find_bad_statement_columns(df, adata: AnnData):
-    """
-    Detect columns in uns["statements"] that fail h5ad serialization.
-    """
-    bad = []
-
-    for col in df.columns:
-        ad = adata.copy()
-        ad.uns = {}
-
-        test_df = df[[col]].copy()
-        test_df.index = test_df.index.astype(str)
-        test_df.columns = test_df.columns.astype(str)
-
-        ad.uns["statements"] = test_df.to_dict(orient="split")
-
-        try:
-            with tempfile.NamedTemporaryFile(suffix=".h5ad", delete=True) as f:
-                ad.write_h5ad(f.name)
-        except Exception:
-            bad.append(col)
-
-    return bad
-
-
-def sanitize_for_export(adata: AnnData):
-    """
-    Make AnnData safe for downstream JS / h5ad consumers.
-    """
-    adata = adata.copy()
-
-    # --- fix uns["statements"] ---
-    if "statements" in adata.uns:
-        df = adata.uns["statements"]
-        bad_cols = find_bad_statement_columns(df, adata)
-
-        for col in bad_cols:
-            adata.uns["statements"][col] = (
-                adata.uns["statements"][col]
-                .map(lambda x: "" if x is None else str(x))
-            )
-
-    # --- force cluster labels to strings ---
-    categorical_cols = [
-        c for c in adata.obs.columns
-        if c.startswith("kmeans_")
-    ]
-
-    for col in categorical_cols:
-        adata.obs[col] = (
-            adata.obs[col]
-            .astype(object)
-            .infer_objects(copy=False)
-            .fillna(-2)
-            .astype(str)
-        )
-
-    return adata
 
 
 # ----------------------------
@@ -147,15 +82,14 @@ if st.button("Run pipeline and export", type="primary"):
                     key_added="kmeans_localmap",
                 )
 
-    with st.spinner("Sanitizing AnnData for export…"):
-        adata_export = sanitize_for_export(adata)
-
     with tempfile.NamedTemporaryFile(
         suffix=".h5ad",
         delete=False,
     ) as f:
         export_path = f.name
-        adata_export.write_h5ad(export_path, compression="gzip")
+
+    with st.spinner("Exporting h5ad…"):
+        val.write(export_path, adata)
 
     with open(export_path, "rb") as f:
         st.success("Done!")

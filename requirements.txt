@@ -1,2 +1,2 @@
 streamlit
-valency-anndata
+valency-anndata @ git+https://github.com/patcon/valency-anndata.git@57-val-write
